@@ -5,6 +5,64 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Journaling App</title>
         <script src="https://cdn.tailwindcss.com"></script>
+                <script>
+            function addJournalEntry() {
+                const ul = document.querySelector("ul");
+                const li = document.createElement("li");
+                li.className = "mb-2 p-2 border rounded flex items-center";
+
+                const input = document.createElement("input");
+                input.className = "flex-1 p-2 border rounded w-full";
+                input.placeholder = "Journal title...";
+
+                const tickButton = document.createElement("button");
+                tickButton.innerHTML = "✔️";
+                tickButton.className = "ml-2 text-green-500";
+                tickButton.onclick = function() {
+                    const title = input.value;
+                    if (title) {
+                        document.cookie = `journalTitle=${title}; path=/`;
+                        // Optionally, you can add code here to send the title to the server
+                        li.innerHTML = title;
+                    }
+                };
+
+                const crossButton = document.createElement("button");
+                crossButton.innerHTML = "❌";
+                crossButton.className = "ml-2 text-red-500";
+                crossButton.onclick = function() {
+                    ul.removeChild(li);
+                };
+
+                li.appendChild(input);
+                li.appendChild(tickButton);
+                li.appendChild(crossButton);
+                ul.appendChild(li);
+            }
+            
+            async function saveJournalEntry() {
+                const title = document.getElementById("j_title").value;
+                const content = document.getElementById("j_content").value;
+
+                if (title && content) {
+                    const response = await fetch("/save_journal", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ title, content }),
+                    });
+
+                    if (response.ok) {
+                        alert("Journal entry saved successfully!");
+                    } else {
+                        alert("Failed to save journal entry.");
+                    }
+                } else {
+                    alert("Please fill in both title and content.");
+                }
+            }
+        </script>
     </head>
     <body class="bg-gray-100 h-screen flex">
         <!-- Sidebar -->
@@ -26,16 +84,16 @@
                     </button>
                 </h2>
                 <ul>
-                    <li class="mb-2 p-2 border rounded">Entry 1</li>
-                    <li class="mb-2 p-2 border rounded">Entry 2</li>
-                    <li class="mb-2 p-2 border rounded">Entry 3</li>
                 </ul>
             </div>
         </div>
         <!-- Main Content Area -->
         <div class="flex-1 p-4 hidden sm:block">
-            <input class="text-3xl font-bold mb-4 w-full p-2 rounded" placeholder="Journal title..."></input>
-            <textarea class="w-full h-64 p-4 rounded resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="What's on your mind..."></textarea>
+        <div class="flex items-center mb-4">
+            <input id="j_title" class="text-3xl font-bold flex-1 p-2 rounded" placeholder="Journal title..."></input>
+            <button onclick="saveJournalEntry()" class="text-2xl ml-4 p-2 bg-blue-500 text-white rounded">Save</button>
+        </div>
+            <textarea id="j_content" class="w-full h-64 p-4 rounded resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="What's on your mind..."></textarea>
         </div>
     </body>
 </html>
