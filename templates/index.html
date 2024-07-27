@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>My App</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Journaling App</title>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
-        <h1>Hello, world!</h1>
+    <body class="bg-gray-100 h-screen flex">
+        <!-- Sidebar -->
+        <div class="w-full sm:w-1/4 bg-white shadow-lg p-4 h-full">
+            <!-- Calendar Section -->
+            <div class="mb-4">
+                <h2 class="text-xl font-bold mb-2">Select Date</h2>
+                <input type="date" class="w-full p-2 border rounded" />
+            </div>
+            <!-- Journal Entries Section -->
+            <div>
+                <h2 class="text-xl font-bold mb-2">
+                    Journal Entries
+                    <button
+                        onclick="addJournalEntry()"
+                        class="text-black px-2 py-1 rounded-full hover:bg-gray-200"
+                    >
+                        +
+                    </button>
+                </h2>
+                <ul>
+                    <li class="mb-2 p-2 border rounded">Entry 1</li>
+                    <li class="mb-2 p-2 border rounded">Entry 2</li>
+                    <li class="mb-2 p-2 border rounded">Entry 3</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Main Content Area -->
+        <div class="flex-1 p-4 hidden sm:block">
+            <input class="text-3xl font-bold mb-4 w-full p-2 rounded" placeholder="Journal title..."></input>
+            <textarea class="w-full h-64 p-4 rounded resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="What's on your mind..."></textarea>
+        </div>
     </body>
 </html>
