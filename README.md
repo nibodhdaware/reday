@@ -14,8 +14,23 @@ reday is a simple open source daily journal that you can self host and keep you 
 1. Clone the repository by running `git clone https://github.com/nibodhdaware/reday.git`
 2. Create a virtual environment by running `python3 -m venv venv` (optional)
 3. Install the dependencies by running `pip3 install -r requirements.txt`
-4. Run the app by running `python3 app.py`
-5. Visit `http://localhost:8080` or `127.0.0.1:8080` in your browser
+4. Create project and a table in your Supabase database with the following schema:
+    ```
+    CREATE TABLE entries (
+    	j_name varchar(255) PRIMARY KEY,
+    	j_title varchar(255) NOT NULL,
+    	j_date date NOT NULL,
+    	j_content TEXT NOT NULL
+    );
+    ```
+5. Create a `.env` file in the root directory and add the following variables:
+    ```
+    SUPABASE_URL=<supabase_url>
+    SUPABASE_KEY=<supabase_key>
+    ```
+    You can get the `SUPABASE_URL` and `SUPABASE_KEY` by creating a project on [Supabase](https://supabase.com/)
+6. Run the app by running `python3 app.py`
+7. Visit `http://localhost:8080` or `127.0.0.1:8080` in your browser
 
 ## Screenshots
 
