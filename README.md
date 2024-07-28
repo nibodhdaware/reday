@@ -16,7 +16,7 @@ reday is a simple open source daily journal that you can self host and keep you 
 3. Install the dependencies by running `pip3 install -r requirements.txt`
 4. Create project and a table in your Supabase database with the following schema:
     ```
-    CREATE TABLE entries (
+    CREATE TABLE journal (
     	j_name varchar(255) PRIMARY KEY,
     	j_title varchar(255) NOT NULL,
     	j_date date NOT NULL,
